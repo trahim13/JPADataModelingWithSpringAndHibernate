@@ -1,11 +1,13 @@
 package org.trahim.spring.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 public class Notes {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @OneToOne
     private Recipe recipe;
@@ -26,5 +28,13 @@ public class Notes {
 
     public void setRecipeNotes(String recipeNotes) {
         this.recipeNotes = recipeNotes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
