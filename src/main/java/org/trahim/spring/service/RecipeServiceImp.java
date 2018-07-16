@@ -2,6 +2,10 @@ package org.trahim.spring.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.trahim.spring.commands.RecipeCommand;
+import org.trahim.spring.converters.RecipeCommandToRecipe;
+import org.trahim.spring.converters.RecipeToRecipeCommand;
 import org.trahim.spring.domain.Recipe;
 import org.trahim.spring.repositories.RecipeRepository;
 
@@ -14,9 +18,13 @@ import java.util.Set;
 public class RecipeServiceImp implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public RecipeServiceImp(RecipeRepository recipeRepository) {
+    public RecipeServiceImp(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -36,5 +44,16 @@ public class RecipeServiceImp implements RecipeService {
         }
 
         return recipeOptional.get();
+    }
+
+    @Transactional
+    @Override
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+        Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
+
+        Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+        log.debug("Saved RecipeId:" + savedRecipe.getId());
+        return recipeToRecipeCommand.convert(savedRecipe);
+
     }
 }
