@@ -7,6 +7,7 @@ import org.trahim.spring.commands.RecipeCommand;
 import org.trahim.spring.converters.RecipeCommandToRecipe;
 import org.trahim.spring.converters.RecipeToRecipeCommand;
 import org.trahim.spring.domain.Recipe;
+import org.trahim.spring.exceptions.NotFoundException;
 import org.trahim.spring.repositories.RecipeRepository;
 
 import java.util.HashSet;
@@ -40,7 +41,8 @@ public class RecipeServiceImp implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(id);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+//            throw new RuntimeException("Recipe Not Found!");
+            throw new NotFoundException("Recipe Not Found!");
         }
 
         return recipeOptional.get();

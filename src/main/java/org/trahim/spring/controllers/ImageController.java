@@ -47,6 +47,7 @@ public class ImageController {
     public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
         RecipeCommand recipeCommand = recipeService.findCommandByiId(Long.valueOf(id));
 
+
         if (recipeCommand.getImage() != null) {
             byte[] byteArray = new byte[recipeCommand.getImage().length];
             int i = 0;
@@ -60,4 +61,6 @@ public class ImageController {
             IOUtils.copy(is, response.getOutputStream());
         }
     }
+
+
 }
