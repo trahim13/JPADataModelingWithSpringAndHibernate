@@ -42,7 +42,7 @@ public class RecipeController {
     @PostMapping("recipe")
     public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand) {
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
-        return "redirect:/recipe/"+ savedCommand.getId()+"/show/" ;
+        return "redirect:/recipe/" + savedCommand.getId() + "/show/";
     }
 
     @GetMapping("recipe/{id}/delete")
@@ -67,6 +67,18 @@ public class RecipeController {
         return modelAndView;
     }
 
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler({NumberFormatException.class})
+    public ModelAndView handleNumberFormat(Exception e) {
+        log.error("handle a number format exceptions.");
+        log.error(e.getMessage());
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("400error");
+        modelAndView.addObject("exceptions", e);
+        return modelAndView;
+    }
 
 
 }
