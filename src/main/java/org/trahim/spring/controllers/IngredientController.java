@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.trahim.spring.commands.IngredientCommand;
+import org.trahim.spring.commands.RecipeCommand;
+import org.trahim.spring.commands.UnitOfMeasureCommand;
 import org.trahim.spring.service.IngredientService;
 import org.trahim.spring.service.RecipeService;
 import org.trahim.spring.service.UnitOfMeasureService;
@@ -55,13 +57,33 @@ public class IngredientController {
     }
 
 
-    @PostMapping("recipe/{recipeId}/ingredients")
-    public String saveOrUpdate(@ModelAttribute IngredientCommand command){
+    @PostMapping
+    ("recipe/{recipeId}/ingredients")
+    public String saveOrUpdate(@ModelAttribute IngredientCommand command) {
         IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
 
         log.debug("saved receipe id:" + savedCommand.getRecipeId());
         log.debug("saved ingredient id:" + savedCommand.getId());
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredients/" + savedCommand.getId() + "/show";
+    }
+
+
+    @GetMapping
+    @RequestMapping("recipe/{recipeId}/ingredients/new")
+    public String newRecipe(@PathVariable String recipeId, Model model) {
+
+        RecipeCommand recipeCommand = recipeService.findCommandByiId(Long.valueOf(recipeId));
+
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient", ingredientCommand);
+
+        ingredientCommand.setUom(new UnitOfMeasureCommand());
+        model.addAttribute("uomList", unitOfMeasureService.listOfAllUoms());
+
+
+
+        return "recipe/ingredients/ingredientform";
     }
 }
