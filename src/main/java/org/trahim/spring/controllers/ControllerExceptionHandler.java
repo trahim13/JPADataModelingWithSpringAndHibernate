@@ -22,4 +22,6 @@ public class ControllerExceptionHandler {
         modelAndView.addObject("exceptions", e);
         return modelAndView;
     }
+
+
 }

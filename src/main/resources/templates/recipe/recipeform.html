@@ -20,8 +20,15 @@
 <!--/*@thymesVar id="recipe" type="org.trahim.spring.domain.Recipe"*/-->
 <div class="container-fluid" style="margin-top: 20px">
     <div class="row">
+
+
         <div class="col-md-6 col-md-offset-3">
             <form th:object="${recipe}" th:action="@{/recipe/}" method="post">
+
+                <div th:if="${#fields.hasErrors('*')}">
+                    <p>Please correct error first</p>
+                </div>
+
                 <input type="hidden" th:field="*{id}"/>
                 <div class="pannel-group">
                     <div class="panel panel-primary">
@@ -33,6 +40,9 @@
                                 <div class="col-md-3 form-group">
                                     <label>Recipe Description:</label>
                                     <input type="text" class="form-control" th:field="*{description}"/>
+                                    <span th:if="${#fields.errors('description')}">
+                                        <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                                    </span>
                                 </div>
                             </div>
                             <div class="row">
@@ -58,6 +68,10 @@
                                 <div class="col-md-3 form-group">
                                     <label>Prep Time:</label>
                                     <input type="text" class="form-control" th:field="*{prepTime}"/>
+                                    <span th:if="${#fields.errors('prepTime')}">
+                                        <li th:each="err : ${#fields.errors('prepTime')}" th:text="${err}"></li>
+                                    </span>
+
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Cooktime:</label>
@@ -81,14 +95,24 @@
                                 <div class="col-md-3 form-group">
                                     <label>Servings:</label>
                                     <input type="text" class="form-control" th:field="*{servings}"/>
+                                    <span th:if="${#fields.errors('servings')}">
+                                        <li th:each="err : ${#fields.errors('servings')}" th:text="${err}"></li>
+                                    </span>
+
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Source:</label>
                                     <input type="text" class="form-control" th:field="*{source}"/>
+                                    <span th:if="${#fields.errors('source')}">
+                                        <li th:each="err : ${#fields.errors('source')}" th:text="${err}"></li>
+                                    </span>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>URL:</label>
                                     <input type="text" class="form-control" th:field="*{url}"/>
+                                    <span th:if="${#fields.errors('url')}">
+                                        <li th:each="err : ${#fields.errors('url')}" th:text="${err}"></li>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -125,6 +149,9 @@
                                 <div class="row">
                                     <div class="col-md-12 form-group">
                                         <textarea class="form-control" rows="3" th:field="*{derection}"></textarea>
+                                        <span th:if="${#fields.errors('derection')}">
+                                        <li th:each="err : ${#fields.errors('derection')}" th:text="${err}"></li>
+                                    </span>
                                     </div>
                                 </div>
                             </div>
