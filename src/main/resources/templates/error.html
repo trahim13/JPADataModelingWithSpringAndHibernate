@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}"lang="en">
+<head>
+    <title>Error</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div >
+        <ul >
+            <li ><h3 th:text="${error}">Status</h3></li>
+            <li th:text="'Status code: '+ ${status}"></li>
+        </ul>
+        <p><a href="/" th:href="@{/}">Back to home page</a></p>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="en">
+<head th:fragment="head-fragment">
+    <meta charset="utf-8"/>
+    <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">Recipe Admin</title>
+</head>
+<body>
+<header>
+    <nav>
+        <a th:href="@{/index}">Cook book</a>
+        <div>
+            <ul>
+                <li>
+                    <!--<a th:href="@{/index}">Guests</a>-->
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <ul>
+                <li sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}">Login</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div layout:fragment="content"></div>
+</main>
+
+<footer>
+    <div>
+        <p>&copy; Trahim 2018</p>
+    </div>
+</footer>
+
+
+</body>
+</html>

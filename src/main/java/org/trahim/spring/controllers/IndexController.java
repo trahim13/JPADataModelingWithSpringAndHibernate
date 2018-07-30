@@ -3,6 +3,7 @@ package org.trahim.spring.controllers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.trahim.spring.service.RecipeService;
 
@@ -23,5 +24,16 @@ public class IndexController {
 
         model.addAttribute("recipes", recipeService.getRecipes());
         return "index";
+    }
+
+
+    @GetMapping("/login")
+    public String getLoginPage(Model model) {
+        return "login";
+    }
+
+    @GetMapping("/logout-success")
+    public String getLogoutPage(Model model) {
+        return "logout";
     }
 }
