@@ -2,6 +2,7 @@ package org.trahim.spring.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipe/{id}/show")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String showById(@PathVariable String id, Model model) {
 
         model.addAttribute("recipe", recipeService.findById(new Long(id)));
@@ -31,18 +33,21 @@ public class RecipeController {
     }
 
     @GetMapping("recipe/new")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String newRecipe(Model model) {
         model.addAttribute("recipe", new RecipeCommand());
         return "recipe/recipeform";
     }
 
     @GetMapping("recipe/{id}/update")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String updateRecipe(@PathVariable String id, Model model) {
         model.addAttribute("recipe", recipeService.findCommandByiId(Long.valueOf(id)));
         return RECIPE_RECIPEFORM_URL;
     }
 
     @PostMapping("recipe")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand recipeCommand, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -57,6 +62,7 @@ public class RecipeController {
     }
 
     @GetMapping("recipe/{id}/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String deleteById(@PathVariable String id) {
 
         log.debug("Deleting id: " + id);
