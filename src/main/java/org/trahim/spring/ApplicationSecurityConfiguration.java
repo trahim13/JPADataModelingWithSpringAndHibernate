@@ -61,7 +61,14 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .logout().invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/logout-success").permitAll();
+                .logoutSuccessUrl("/logout-success").permitAll()
+                .and()
+
+//                .requiresChannel().anyRequest().requiresSecure(). // все запросы будут перенаправляться в HTTPS протокол
+//                and()
+//                .portMapper()
+//                .http(8080).mapsTo(8181)// порты для HTTP и HTTPS
+        ;
 
 
     }

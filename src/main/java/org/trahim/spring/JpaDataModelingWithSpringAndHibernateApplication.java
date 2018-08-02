@@ -9,4 +9,6 @@ public class JpaDataModelingWithSpringAndHibernateApplication {
     public static void main(String[] args) {
         SpringApplication.run(JpaDataModelingWithSpringAndHibernateApplication.class, args);
     }
+
+
 }
